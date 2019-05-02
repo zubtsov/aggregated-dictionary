@@ -1,7 +1,12 @@
 package org.zubtsov.linguistics.dictionary.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DictionaryChunk {
-    private List<Существительное> существительные;
+    private Set<Noun> nouns = new HashSet<>();
+
+    public void addNoun(Noun noun) {
+        nouns.add(noun);
+    }
 }
