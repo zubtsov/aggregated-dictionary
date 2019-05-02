@@ -2,26 +2,36 @@ package org.zubtsov.linguistics.dictionary.entities;
 
 import org.zubtsov.linguistics.dictionary.entities.characteristics.*;
 
+import java.util.List;
+
 public class Существительное {
-    public class Характеристики {
-        //непостоянные признаки
+    public class ИзменяемыеХарактеристики {
         public Число число = Число.ЕДИНСТВЕННОЕ;
         public Падеж падеж = Падеж.ИМЕНИТЕЛЬНЫЙ;
+    }
 
-        //постоянные признаки
+    public class ПостоянныеХарактеристики {
         public Род род;
         public Склонение склонение;
         public Одушевленность одушевленность;
         public Собственность собственность;
     }
 
-    private String[] словоформы;
+    //todo: implement
 
-    public String get(Характеристики характеристики, String начальнаяФорма) {
+    public List<ИзменяемыеХарактеристики> getChangingAttributes(String словоформа) {
         return null;
     }
 
-    public void set(Характеристики характеристики, String словоформа) {
+    public ПостоянныеХарактеристики getConstantAttributes(String словоформа) {
+        return null;
+    }
+
+    public String getWordForm(ИзменяемыеХарактеристики changingAttributes, String начальнаяФорма) {
+        return null;
+    }
+
+    public void setWordForm(ИзменяемыеХарактеристики constantAttributes, String wordForm) {
 
     }
 }
