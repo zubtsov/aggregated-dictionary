@@ -13,20 +13,18 @@ import java.util.Set;
 
 @Slf4j
 public class ODictParser {
-    private CsvLineObjectMapper mapper = new CsvLineObjectMapper();
+    private ZaliznyakMapper mapper = new ZaliznyakMapper();
 
     public static void main(String[] args) {
-        String dictionaryFilePath = "D:\\Learning\\Books\\Linguistics\\Dictionaries\\odict.ru\\odict.csv";
+        String dictionaryFilePath = "D:\\Learning\\Books\\Linguistics\\Dictionaries\\odict.ru\\zalizniak.txt";
         new ODictParser().parse(dictionaryFilePath);
-//        new ODictParser().testStrangeValues(dictionaryFilePath);
-//        new ODictParser().parseModifiers(dictionaryFilePath).forEach(s -> System.out.println(s));
     }
 
     public void parse(String dictionaryFilePath) {
         int lineNumber = 1;
-        String[] line;
-        try (CSVReader reader = new CSVReader(new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFilePath), "Windows-1251")))) {
-            while ((line = reader.readNext()) != null && lineNumber++ < 1000) {
+        String line;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFilePath), "Windows-1251"))) {
+            while ((line = reader.readLine()) != null && lineNumber++ < 10000) {
                 System.out.println(mapper.map(line));
             }
         } catch (IOException e) {
@@ -36,6 +34,7 @@ public class ODictParser {
         }
     }
 
+    @Deprecated
     public Set<String> parseModifiers(String dictionaryFilePath) {
         Set<String> modifiers = new HashSet<>();
         try (CSVReader reader = new CSVReader(new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFilePath), "Windows-1251")))) {
@@ -49,6 +48,7 @@ public class ODictParser {
         return modifiers;
     }
 
+    @Deprecated
     public void testStrangeValues(String dictionaryFilePath) {
         int lineNumber = 0;
         try (CSVReader reader = new CSVReader(new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFilePath), "Windows-1251")))) {

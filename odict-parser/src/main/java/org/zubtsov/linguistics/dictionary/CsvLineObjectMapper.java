@@ -8,6 +8,7 @@ import org.zubtsov.linguistics.dictionary.entities.characteristics.Падеж;
 import org.zubtsov.linguistics.dictionary.entities.characteristics.Род;
 import org.zubtsov.linguistics.dictionary.entities.characteristics.Число;
 
+@Deprecated
 @Slf4j
 public class CsvLineObjectMapper {
     public DictionaryChunk map(String[] line) {
@@ -91,73 +92,73 @@ public class CsvLineObjectMapper {
     private Noun mapLineToNoun(String[] line, String modifier) {
         Noun noun = new Noun();
 
-        Noun.ImmutableAttributes ia = new Noun.ImmutableAttributes();
-        switch (modifier) {
-            case "м":
-                ia.setРод(Род.МУЖСКОЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
-                break;
-            case "ж":
-                ia.setРод(Род.ЖЕНСКИЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
-                break;
-            case "с":
-                ia.setРод(Род.СРЕДНИЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
-                break;
-            case "мо":
-                ia.setРод(Род.МУЖСКОЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
-                break;
-            case "жо":
-                ia.setРод(Род.ЖЕНСКИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
-                break;
-            case "со":
-                ia.setРод(Род.СРЕДНИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
-                break;
-            case "мо-жо":
-                ia.setРод(Род.ОБЩИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
-                break;
-        }
-        noun.setWordImmutableAttributes(ia);
-
-        int indexInLine = 2;
-        switch (line.length) {
-            case 9:
-                for (Падеж падеж : Падеж.values()) {
-                    Noun.MutableAttributes ma = new Noun.MutableAttributes();
-                    ma.setЧисло(Число.ЕДИНСТВЕННОЕ);
-                    ma.setПадеж(падеж);
-
-                    if (падеж == Падеж.ИМЕНИТЕЛЬНЫЙ) {
-                        noun.setWordForm(ma, line[0]);
-                    } else {
-                        noun.setWordForm(ma, line[indexInLine++]);
-                    }
-                }
-                indexInLine++; //workaround
-                break;
-            case 15:
-                for (Число число : Число.values()) {
-                    for (Падеж падеж : Падеж.values()) {
-                        Noun.MutableAttributes ma = new Noun.MutableAttributes();
-                        ma.setЧисло(число);
-                        ma.setПадеж(падеж);
-
-                        if (число == Число.ЕДИНСТВЕННОЕ && падеж == Падеж.ИМЕНИТЕЛЬНЫЙ) {
-                            noun.setWordForm(ma, line[0]);
-                        } else {
-                            noun.setWordForm(ma, line[indexInLine]);
-                            indexInLine++;
-                        }
-                    }
-                    indexInLine++; //workaround
-                }
-                break;
-        }
+//        Noun.ImmutableAttributes ia = new Noun.ImmutableAttributes();
+//        switch (modifier) {
+//            case "м":
+//                ia.setРод(Род.МУЖСКОЙ);
+//                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+//                break;
+//            case "ж":
+//                ia.setРод(Род.ЖЕНСКИЙ);
+//                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+//                break;
+//            case "с":
+//                ia.setРод(Род.СРЕДНИЙ);
+//                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+//                break;
+//            case "мо":
+//                ia.setРод(Род.МУЖСКОЙ);
+//                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+//                break;
+//            case "жо":
+//                ia.setРод(Род.ЖЕНСКИЙ);
+//                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+//                break;
+//            case "со":
+//                ia.setРод(Род.СРЕДНИЙ);
+//                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+//                break;
+//            case "мо-жо":
+//                ia.setРод(Род.ОБЩИЙ);
+//                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+//                break;
+//        }
+//        noun.setWordImmutableAttributes(ia);
+//
+//        int indexInLine = 2;
+//        switch (line.length) {
+//            case 9:
+//                for (Падеж падеж : Падеж.values()) {
+//                    Noun.MutableAttributes ma = new Noun.MutableAttributes();
+//                    ma.setЧисло(Число.ЕДИНСТВЕННОЕ);
+//                    ma.setПадеж(падеж);
+//
+//                    if (падеж == Падеж.ИМЕНИТЕЛЬНЫЙ) {
+//                        noun.setWordForm(ma, line[0]);
+//                    } else {
+//                        noun.setWordForm(ma, line[indexInLine++]);
+//                    }
+//                }
+//                indexInLine++; //workaround
+//                break;
+//            case 15:
+//                for (Число число : Число.values()) {
+//                    for (Падеж падеж : Падеж.values()) {
+//                        Noun.MutableAttributes ma = new Noun.MutableAttributes();
+//                        ma.setЧисло(число);
+//                        ma.setПадеж(падеж);
+//
+//                        if (число == Число.ЕДИНСТВЕННОЕ && падеж == Падеж.ИМЕНИТЕЛЬНЫЙ) {
+//                            noun.setWordForm(ma, line[0]);
+//                        } else {
+//                            noun.setWordForm(ma, line[indexInLine]);
+//                            indexInLine++;
+//                        }
+//                    }
+//                    indexInLine++; //workaround
+//                }
+//                break;
+//        }
         return noun;
     }
 }

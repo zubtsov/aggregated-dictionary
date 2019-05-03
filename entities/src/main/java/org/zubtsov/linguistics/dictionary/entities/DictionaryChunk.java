@@ -14,9 +14,11 @@ public class DictionaryChunk {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nouns:\n");
-        for (Noun noun : nouns) {
-            sb.append(noun);
+        if (!nouns.isEmpty()) {
+            sb.append("Nouns:\n");
+            for (Noun noun : nouns) {
+                sb.append(noun);
+            }
         }
         return sb.toString();
     }

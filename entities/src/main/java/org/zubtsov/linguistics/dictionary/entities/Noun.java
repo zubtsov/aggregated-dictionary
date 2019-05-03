@@ -42,7 +42,7 @@ public class Noun implements PartOfSpeech {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MutableAttributes {
+    public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
         public static MutableAttributes initialFormAttributes = new MutableAttributes();
 
         private Число число = Число.ЕДИНСТВЕННОЕ;
@@ -61,7 +61,7 @@ public class Noun implements PartOfSpeech {
     @Setter
     private ImmutableAttributes wordImmutableAttributes;
     @Getter
-    private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping;
+    private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
 
     public Collection<MutableAttributes> getMutableAttributes(String wordForm) {
         return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(wordForm);
