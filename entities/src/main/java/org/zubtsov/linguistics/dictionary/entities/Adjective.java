@@ -8,34 +8,19 @@ import org.zubtsov.linguistics.dictionary.entities.utils.WordFormsMutableAttribu
 import java.util.Collection;
 import java.util.Map;
 
-public class Noun implements PartOfSpeech {
-    //is there any exceptions, e.g. when multiple word forms fit one mutable attributes vector?
-    public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Число.values().length * Падеж.values().length;
+public class Adjective implements PartOfSpeech {
+    public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Род.values().length * Число.values().length * Падеж.values().length;
 
-    public Noun(String initialForm) {
+    public Adjective(String initialForm) {
         this();
         wordFormsMutableAttributesMapping.setWordForm(initialForm, MutableAttributes.initialFormAttributes);
     }
 
-    public Noun() {
+    public Adjective() {
         this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
     }
 
-    public Noun(String едИмП, String едРодП, String едДатП, String едВинП, String едТвП, String едПредП,
-                String мнИмП, String мнРодП, String мнДатП, String мнВинП, String мнТвП, String мнПредП) {
-        this(new String[]{едИмП, едРодП, едДатП, едВинП, едТвП, едПредП, мнИмП, мнРодП, мнДатП, мнВинП, мнТвП, мнПредП});
-    }
-
-    public Noun(String... forms) {
-        int formIndex = 0;
-        for (Число число : Число.values()) {
-            for (Падеж падеж : Падеж.values()) {
-                wordFormsMutableAttributesMapping.setWordForm(forms[formIndex++], new MutableAttributes(число, падеж));
-            }
-        }
-    }
-
-    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
+    public Adjective(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
         this.wordImmutableAttributes = wordImmutableAttributes;
         this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
@@ -46,16 +31,16 @@ public class Noun implements PartOfSpeech {
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
         public static MutableAttributes initialFormAttributes = new MutableAttributes();
 
+        private Род род = Род.МУЖСКОЙ;
         private Число число = Число.ЕДИНСТВЕННОЕ;
         private Падеж падеж = Падеж.ИМЕНИТЕЛЬНЫЙ;
     }
 
     @Data
     public static class ImmutableAttributes {
-        private Род род;
-        private Склонение склонение;
-        private Одушевленность одушевленность;
-        private Собственность собственность;
+        private РазрядПоЗначению разрядПоЗначению;
+        private Полнота полнота; //mutable?
+        private СтепеньСравнения степеньСравнения; //mutable?
     }
 
     @Getter
@@ -78,7 +63,6 @@ public class Noun implements PartOfSpeech {
 
     @Override
     public String getInitialForm() {
-        //todo: enforce presence of initial form by means of constructors?
         return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes).iterator().next();
     }
 
@@ -94,7 +78,7 @@ public class Noun implements PartOfSpeech {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Noun rhs = (Noun) obj;
+        Adjective rhs = (Adjective) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(getInitialForm(), rhs.getInitialForm()) //[STRONG ASSUMPTION] this check is sufficient

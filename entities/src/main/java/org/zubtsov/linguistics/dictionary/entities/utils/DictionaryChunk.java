@@ -1,4 +1,8 @@
-package org.zubtsov.linguistics.dictionary.entities;
+package org.zubtsov.linguistics.dictionary.entities.utils;
+
+import org.zubtsov.linguistics.dictionary.entities.Adjective;
+import org.zubtsov.linguistics.dictionary.entities.Noun;
+import org.zubtsov.linguistics.dictionary.entities.Verb;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +11,7 @@ import java.util.Set;
 public class DictionaryChunk {
     private Set<Noun> nouns = new HashSet<>();
     private Set<Verb> verbs = new HashSet<>();
+    private Set<Adjective> adjectives = new HashSet<>();
 
     public void addNoun(Noun noun) {
         nouns.add(noun);
@@ -14,6 +19,10 @@ public class DictionaryChunk {
 
     public void addVerb(Verb verb) {
         verbs.add(verb);
+    }
+
+    public void addAdjective(Adjective adjective) {
+        adjectives.add(adjective);
     }
 
     @Override
@@ -24,10 +33,17 @@ public class DictionaryChunk {
             for (Noun noun : nouns) {
                 sb.append(noun);
             }
-        }if (!verbs.isEmpty()) {
+        }
+        if (!verbs.isEmpty()) {
             sb.append("Verbs:\n");
             for (Verb verb : verbs) {
                 sb.append(verb);
+            }
+        }
+        if (!adjectives.isEmpty()) {
+            sb.append("Adjectives:\n");
+            for (Adjective adjective : adjectives) {
+                sb.append(adjective);
             }
         }
         return sb.toString();

@@ -1,4 +1,4 @@
-package org.zubtsov.linguistics.dictionary.entities;
+package org.zubtsov.linguistics.dictionary.entities.utils;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;

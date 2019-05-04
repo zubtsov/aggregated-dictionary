@@ -20,7 +20,10 @@ public class ODictParser {
         int lineNumber = 1;
         String line;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFilePath), "Windows-1251"))) {
-            while ((line = reader.readLine()) != null && lineNumber++ < 10) {
+            while ((line = reader.readLine()) != null && lineNumber++ < 1000) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
                 System.out.println(mapper.map(line));
             }
         } catch (IOException e) {

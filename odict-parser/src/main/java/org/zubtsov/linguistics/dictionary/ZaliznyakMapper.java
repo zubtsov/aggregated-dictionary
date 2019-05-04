@@ -1,6 +1,7 @@
 package org.zubtsov.linguistics.dictionary;
 
-import org.zubtsov.linguistics.dictionary.entities.DictionaryChunk;
+import org.zubtsov.linguistics.dictionary.entities.Adjective;
+import org.zubtsov.linguistics.dictionary.entities.utils.DictionaryChunk;
 import org.zubtsov.linguistics.dictionary.entities.Noun;
 import org.zubtsov.linguistics.dictionary.entities.Verb;
 import org.zubtsov.linguistics.dictionary.entities.characteristics.Вид;
@@ -11,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ZaliznyakMapper {
-    private static final Pattern regex = Pattern.compile("^([а-яА-Я]+)\\s+([0-9]+)\\s+(м|ж|с|мо|жо|со|мо\\-жо|св|нсв|св\\-нсв)\\s+[\\w\\W]*");
+    private static final Pattern regex = Pattern.compile("^([а-яА-Я]+)\\s+([0-9]+)\\s+(м|ж|с|мо|жо|со|мо\\-жо|св|нсв|св\\-нсв|п)\\s+[\\w\\W]*");
 
     public DictionaryChunk map(String line) {
         DictionaryChunk chunk = new DictionaryChunk();
@@ -37,9 +38,20 @@ public class ZaliznyakMapper {
                     Verb verb = mapLineToVerb(initialForm, modifier);
                     chunk.addVerb(verb);
                     break;
+                case "п":
+                    Adjective adjective = mapLineToAdjective(initialForm, modifier);
+                    chunk.addAdjective(adjective);
+                    break;
+                default:
+                    break;
             }
         }
         return chunk;
+    }
+
+    private Adjective mapLineToAdjective(String initialForm, String modifier) {
+        Adjective adjective = new Adjective(initialForm);
+        return adjective;
     }
 
     private Verb mapLineToVerb(String initialForm, String modifier) {

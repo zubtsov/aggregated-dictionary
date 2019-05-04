@@ -3,7 +3,9 @@ package org.zubtsov.linguistics.dictionary.entities;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.zubtsov.linguistics.dictionary.entities.characteristics.*;
+import org.zubtsov.linguistics.dictionary.entities.utils.WordFormsMutableAttributesMapping;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class Verb implements PartOfSpeech {
@@ -53,6 +55,18 @@ public class Verb implements PartOfSpeech {
     private ImmutableAttributes wordImmutableAttributes;
     @Getter
     private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
+
+    public Collection<MutableAttributes> getMutableAttributes(String wordForm) {
+        return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(wordForm);
+    }
+
+    public String getWordForm(MutableAttributes mutableAttributes) {
+        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(mutableAttributes).iterator().next();
+    }
+
+    public void setWordForm(MutableAttributes mutableAttributes, String wordForm) {
+        wordFormsMutableAttributesMapping.setWordForm(wordForm, mutableAttributes);
+    }
 
     @Override
     public String getInitialForm() {
