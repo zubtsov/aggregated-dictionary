@@ -1,0 +1,5 @@
+package org.zubtsov.linguistics.dictionary.entities.characteristics;
+
+public enum Лицо {
+    ПЕРВОЕ, ВТОРОЕ, ТРЕТЬЕ
+}

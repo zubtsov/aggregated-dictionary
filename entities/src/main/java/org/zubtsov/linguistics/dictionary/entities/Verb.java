@@ -4,37 +4,25 @@ import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.zubtsov.linguistics.dictionary.entities.characteristics.*;
 
-import java.util.Collection;
 import java.util.Map;
 
-public class Noun implements PartOfSpeech {
-    //is there any exceptions, e.g. when multiple word forms fit one mutable attributes vector?
-    public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Число.values().length * Падеж.values().length;
+public class Verb implements PartOfSpeech {
+    public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Наклонение.values().length *
+            Время.values().length *
+            Род.values().length *
+            Число.values().length *
+            Лицо.values().length;
 
-    public Noun(String initialForm) {
+    public Verb(String initialForm) {
         this();
         wordFormsMutableAttributesMapping.setWordForm(initialForm, MutableAttributes.initialFormAttributes);
     }
 
-    public Noun() {
+    public Verb() {
         this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
     }
 
-    public Noun(String едИмП, String едРодП, String едДатП, String едВинП, String едТвП, String едПредП,
-                String мнИмП, String мнРодП, String мнДатП, String мнВинП, String мнТвП, String мнПредП) {
-        this(new String[]{едИмП, едРодП, едДатП, едВинП, едТвП, едПредП, мнИмП, мнРодП, мнДатП, мнВинП, мнТвП, мнПредП});
-    }
-
-    public Noun(String... forms) {
-        int formIndex = 0;
-        for (Число число : Число.values()) {
-            for (Падеж падеж : Падеж.values()) {
-                wordFormsMutableAttributesMapping.setWordForm(forms[formIndex++], new MutableAttributes(число, падеж));
-            }
-        }
-    }
-
-    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
+    public Verb(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
         this.wordImmutableAttributes = wordImmutableAttributes;
         this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
@@ -45,16 +33,19 @@ public class Noun implements PartOfSpeech {
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
         public static MutableAttributes initialFormAttributes = new MutableAttributes();
 
-        private Число число = Число.ЕДИНСТВЕННОЕ;
-        private Падеж падеж = Падеж.ИМЕНИТЕЛЬНЫЙ;
+        private Наклонение наклонение;
+        private Время время;
+        private Род род;
+        private Число число;
+        private Лицо лицо;
     }
 
     @Data
     public static class ImmutableAttributes {
-        private Род род;
-        private Склонение склонение;
-        private Одушевленность одушевленность;
-        private Собственность собственность;
+        private Вид вид;
+        private Возвратность возвратность;
+        private Переходность переходность;
+        private Спряжение спряжение;
     }
 
     @Getter
@@ -62,18 +53,6 @@ public class Noun implements PartOfSpeech {
     private ImmutableAttributes wordImmutableAttributes;
     @Getter
     private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
-
-    public Collection<MutableAttributes> getMutableAttributes(String wordForm) {
-        return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(wordForm);
-    }
-
-    public String getWordForm(MutableAttributes mutableAttributes) {
-        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(mutableAttributes).iterator().next();
-    }
-
-    public void setWordForm(MutableAttributes mutableAttributes, String wordForm) {
-        wordFormsMutableAttributesMapping.setWordForm(wordForm, mutableAttributes);
-    }
 
     @Override
     public String getInitialForm() {
@@ -93,7 +72,7 @@ public class Noun implements PartOfSpeech {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Noun rhs = (Noun) obj;
+        Verb rhs = (Verb) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(getInitialForm(), rhs.getInitialForm()) //[STRONG ASSUMPTION] this check is sufficient
