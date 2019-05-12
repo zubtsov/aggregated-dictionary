@@ -34,4 +34,19 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>zubtsov</groupId>
+        <artifactId>maven-velocity-template-plugin</artifactId>
+        <configuration>
+          <templateFileName>${project.basedir}\src\main\resources\templates\enum.vm</templateFileName>
+          <rootConfigsFolder>${project.basedir}\src\main\resources\configs</rootConfigsFolder>
+          <configFileNamesRegex>([\w\W]+)\.json</configFileNamesRegex>
+          <rootGeneratedSourcesFolder>${project.build.directory}\generated-sources</rootGeneratedSourcesFolder>
+          <generatedFileNamesRegex>$1.java</generatedFileNamesRegex>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

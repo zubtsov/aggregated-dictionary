@@ -1,0 +1,16 @@
+package org.zubtsov.linguistics.dictionary.entities.characteristics;
+
+import java.util.stream.Stream;
+
+public enum ${configFileName} {
+#foreach($possibleValue in $possibleValues)$possibleValue#if($foreach.hasNext),#end#end
+#foreach($specialValue in $specialValues)$specialValue#if($foreach.hasNext),#end#end;
+
+private static final Вид[] cachedRealValues = Stream.of(values())
+.filter(вид -> !вид.equals(НЕИЗВЕСТНО))
+.toArray(Вид[]::new);
+
+public static Вид[] realValues() {
+return cachedRealValues;
+}
+}
