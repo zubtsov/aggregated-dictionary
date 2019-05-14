@@ -7,11 +7,11 @@ import com.google.common.collect.Multimaps;
 import java.util.Collection;
 import java.util.Map;
 
-//bidirectional multimap in terms of guava (one to many relationship )
+//bidirectional multimap in terms of guava ( almost many to many relationship )
 public class WordFormsMutableAttributesMapping<K, V> {
     public WordFormsMutableAttributesMapping() {
         wordFormsMutableAttributesMapping = LinkedHashMultimap.create();
-        wordFormsMutableAttributesMappingInversed = LinkedHashMultimap.create();
+        mutableAttributesWordFormsMapping = LinkedHashMultimap.create();
     }
 
     public WordFormsMutableAttributesMapping(int numberOfWordForms, int maxNumberOfMutableAttributesCombinationsPerWordForm) {
@@ -19,7 +19,7 @@ public class WordFormsMutableAttributesMapping<K, V> {
                 numberOfWordForms,
                 maxNumberOfMutableAttributesCombinationsPerWordForm
         );
-        wordFormsMutableAttributesMappingInversed = LinkedHashMultimap.create(
+        mutableAttributesWordFormsMapping = LinkedHashMultimap.create(
                 maxNumberOfMutableAttributesCombinationsPerWordForm,
                 numberOfWordForms
         );
@@ -28,14 +28,14 @@ public class WordFormsMutableAttributesMapping<K, V> {
     private boolean isMapsSynchronized = true;
 
     private Multimap<K, V> wordFormsMutableAttributesMapping;
-    private Multimap<V, K> wordFormsMutableAttributesMappingInversed;
+    private Multimap<V, K> mutableAttributesWordFormsMapping;
 
     public Collection<K> getWordFormByMutableAttributes(V mutableAttributes) {
         if (!isMapsSynchronized) {
-            Multimaps.invertFrom(wordFormsMutableAttributesMapping, wordFormsMutableAttributesMappingInversed);
+            Multimaps.invertFrom(wordFormsMutableAttributesMapping, mutableAttributesWordFormsMapping);
             isMapsSynchronized = true;
         }
-        return wordFormsMutableAttributesMappingInversed.get(mutableAttributes);
+        return mutableAttributesWordFormsMapping.get(mutableAttributes);
     }
 
     public Collection<V> getMutableAttributesByWordForm(K wordForm) {
@@ -46,8 +46,19 @@ public class WordFormsMutableAttributesMapping<K, V> {
         return wordFormsMutableAttributesMapping.entries();
     }
 
+    public Collection<Map.Entry<V, K>> getMutableAttributesToWordFormMappingEntries() {
+        return mutableAttributesWordFormsMapping.entries();
+    }
+
     public void setWordForm(K wordForm, V mutableAttributes) {
         wordFormsMutableAttributesMapping.put(wordForm, mutableAttributes);
+        isMapsSynchronized = false;
+    }
+
+    public void setWordForms(Collection<K> wordForms, V mutableAttributes) {
+        for (K wordForm : wordForms) {
+            wordFormsMutableAttributesMapping.put(wordForm, mutableAttributes);
+        }
         isMapsSynchronized = false;
     }
 }

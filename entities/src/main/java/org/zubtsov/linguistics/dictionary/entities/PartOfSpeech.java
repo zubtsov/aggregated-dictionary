@@ -5,5 +5,5 @@ public interface PartOfSpeech {
     default String getName() {
         return this.getClass().getName().toLowerCase();
     }
-    String getInitialForm();
+    Словоформа getInitialForm();
 }

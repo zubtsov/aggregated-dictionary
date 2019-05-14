@@ -16,20 +16,20 @@ public class Noun implements PartOfSpeech {
     @Setter
     private ImmutableAttributes wordImmutableAttributes;
     @Getter
-    private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
+    private WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
 
     public Noun() {
         this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
     }
 
-    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
+    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping) {
         this.wordImmutableAttributes = wordImmutableAttributes;
         this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
 
     public Noun(String initialForm) {
         this();
-        wordFormsMutableAttributesMapping.setWordForm(initialForm, MutableAttributes.initialFormAttributes);
+        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(initialForm), MutableAttributes.initialFormAttributes);
     }
 
     public Noun(String едИмП, String едРодП, String едДатП, String едВинП, String едТвП, String едПредП,
@@ -41,7 +41,7 @@ public class Noun implements PartOfSpeech {
         int formIndex = 0; //todo: find out if order is preserved
         for (Число число : Число.realValues()) {
             for (Падеж падеж : Падеж.realValues()) {
-                wordFormsMutableAttributesMapping.setWordForm(forms[formIndex++], new MutableAttributes(число, падеж));
+                wordFormsMutableAttributesMapping.setWordForm(new Словоформа(forms[formIndex++]), new MutableAttributes(число, падеж));
             }
         }
     }
@@ -66,21 +66,31 @@ public class Noun implements PartOfSpeech {
 
     //business methods
     public Collection<MutableAttributes> getMutableAttributes(String wordForm) {
-        return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(wordForm);
+        return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(new Словоформа(wordForm));
     }
 
-    public String getWordForm(MutableAttributes mutableAttributes) {
-        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(mutableAttributes).iterator().next();
+    public Collection<Словоформа> getWordForm(MutableAttributes mutableAttributes) {
+        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(mutableAttributes);
     }
 
     public void setWordForm(MutableAttributes mutableAttributes, String wordForm) {
+        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(wordForm), mutableAttributes);
+    }
+
+    public void setWordForm(MutableAttributes mutableAttributes, Словоформа wordForm) {
         wordFormsMutableAttributesMapping.setWordForm(wordForm, mutableAttributes);
     }
 
+    public void setWordForms(MutableAttributes mutableAttributes, Collection<Словоформа> wordForms) {
+        wordFormsMutableAttributesMapping.setWordForms(wordForms, mutableAttributes);
+    }
+
     @Override
-    public String getInitialForm() {
+    public Словоформа getInitialForm() {
         //todo: enforce presence of initial form by means of constructors?
-        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes).iterator().next();
+        return wordFormsMutableAttributesMapping
+                .getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes)
+                .iterator().next();
     }
 
     @Override
@@ -110,7 +120,7 @@ public class Noun implements PartOfSpeech {
         sb.append("\nImmutable attributes:\n");
         sb.append(wordImmutableAttributes);
         sb.append("\nWord forms:\n");
-        for (Map.Entry<String, MutableAttributes> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
+        for (Map.Entry<Словоформа, MutableAttributes> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
             sb.append(entry.getKey());
             sb.append("[");
             sb.append(entry.getValue());
