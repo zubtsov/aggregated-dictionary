@@ -77,38 +77,36 @@ public class ZaliznyakMapper {
     private Noun mapLineToNoun(String initialForm, String modifier) {
         Noun noun = new Noun(initialForm);
 
-        Noun.ImmutableAttributes ia = new Noun.ImmutableAttributes();
         switch (modifier) {
             case "м":
-                ia.setРод(Род.МУЖСКОЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.МУЖСКОЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
                 break;
             case "ж":
-                ia.setРод(Род.ЖЕНСКИЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.ЖЕНСКИЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
                 break;
             case "с":
-                ia.setРод(Род.СРЕДНИЙ);
-                ia.setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.СРЕДНИЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.НЕОДУШЕВЛЕННОЕ);
                 break;
             case "мо":
-                ia.setРод(Род.МУЖСКОЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.МУЖСКОЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
                 break;
             case "жо":
-                ia.setРод(Род.ЖЕНСКИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.ЖЕНСКИЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
                 break;
             case "со":
-                ia.setРод(Род.СРЕДНИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.СРЕДНИЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
                 break;
             case "мо-жо":
-                ia.setРод(Род.ОБЩИЙ);
-                ia.setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
+                noun.getWordImmutableAttributes().setРод(Род.ОБЩИЙ);
+                noun.getWordImmutableAttributes().setОдушевленность(Одушевленность.ОДУШЕВЛЕННОЕ);
                 break;
         }
-        noun.setWordImmutableAttributes(ia);
 
         return noun;
     }

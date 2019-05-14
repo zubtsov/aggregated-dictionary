@@ -12,13 +12,24 @@ public class Noun implements PartOfSpeech {
     //is there any exceptions, e.g. when multiple word forms fit one mutable attributes vector?
     public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Число.values().length * Падеж.values().length;
 
-    public Noun(String initialForm) {
-        this();
-        wordFormsMutableAttributesMapping.setWordForm(initialForm, MutableAttributes.initialFormAttributes);
-    }
+    @Getter
+    @Setter
+    private ImmutableAttributes wordImmutableAttributes;
+    @Getter
+    private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
 
     public Noun() {
         this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
+    }
+
+    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
+        this.wordImmutableAttributes = wordImmutableAttributes;
+        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
+    }
+
+    public Noun(String initialForm) {
+        this();
+        wordFormsMutableAttributesMapping.setWordForm(initialForm, MutableAttributes.initialFormAttributes);
     }
 
     public Noun(String едИмП, String едРодП, String едДатП, String едВинП, String едТвП, String едПредП,
@@ -27,43 +38,33 @@ public class Noun implements PartOfSpeech {
     }
 
     public Noun(String... forms) {
-        int formIndex = 0;
-        for (Число число : Число.values()) {
-            for (Падеж падеж : Падеж.values()) {
+        int formIndex = 0; //todo: find out if order is preserved
+        for (Число число : Число.realValues()) {
+            for (Падеж падеж : Падеж.realValues()) {
                 wordFormsMutableAttributesMapping.setWordForm(forms[formIndex++], new MutableAttributes(число, падеж));
             }
         }
-    }
-
-    public Noun(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping) {
-        this.wordImmutableAttributes = wordImmutableAttributes;
-        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes();
+        public static MutableAttributes initialFormAttributes = new MutableAttributes(Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
 
-        private Число число = Число.ЕДИНСТВЕННОЕ;
-        private Падеж падеж = Падеж.ИМЕНИТЕЛЬНЫЙ;
+        private Число число = Число.НЕИЗВЕСТНО;
+        private Падеж падеж = Падеж.НЕИЗВЕСТНО;
     }
 
     @Data
     public static class ImmutableAttributes {
-        private Род род;
-        private Склонение склонение;
-        private Одушевленность одушевленность;
-        private Собственность собственность;
+        private Род род = Род.НЕИЗВЕСТНО;
+        private Склонение склонение = Склонение.НЕИЗВЕСТНО;
+        private Одушевленность одушевленность = Одушевленность.НЕИЗВЕСТНО;
+        private Собственность собственность = Собственность.НЕИЗВЕСТНО;
     }
 
-    @Getter
-    @Setter
-    private ImmutableAttributes wordImmutableAttributes;
-    @Getter
-    private WordFormsMutableAttributesMapping<String, MutableAttributes> wordFormsMutableAttributesMapping; //"Парадигма", по А.А. Зализняку
-
+    //business methods
     public Collection<MutableAttributes> getMutableAttributes(String wordForm) {
         return wordFormsMutableAttributesMapping.getMutableAttributesByWordForm(wordForm);
     }
