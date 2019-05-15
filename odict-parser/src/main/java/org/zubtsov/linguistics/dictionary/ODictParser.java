@@ -12,7 +12,7 @@ public class ODictParser {
     private ZaliznyakMapper mapper = new ZaliznyakMapper();
 
     public static void main(String[] args) {
-        String dictionaryFilePath = "C:\\Users\\zubtsov\\Downloads\\zalizniak.txt";
+        String dictionaryFilePath = args[0];
         new ODictParser().parse(dictionaryFilePath);
     }
 
