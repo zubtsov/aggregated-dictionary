@@ -17,7 +17,12 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes(); //начальная форма глагола не имеет изменяемых атрибутов
+        public static MutableAttributes initialFormAttributes = new MutableAttributes(
+                Наклонение.ОТСУТСТВУЕТ,
+                Время.ОТСУТСТВУЕТ,
+                Род.ОТСУТСТВУЕТ,
+                Число.ОТСУТСТВУЕТ,
+                Лицо.ОТСУТСТВУЕТ); //начальная форма глагола не имеет изменяемых атрибутов
 
         private Наклонение наклонение = Наклонение.НЕИЗВЕСТНО;
         private Время время = Время.НЕИЗВЕСТНО;
