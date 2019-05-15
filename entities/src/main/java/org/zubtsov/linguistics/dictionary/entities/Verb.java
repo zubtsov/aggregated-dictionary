@@ -17,21 +17,21 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes();
+        public static MutableAttributes initialFormAttributes = new MutableAttributes(); //начальная форма глагола не имеет изменяемых атрибутов
 
-        private Наклонение наклонение;
-        private Время время;
-        private Род род;
-        private Число число;
-        private Лицо лицо;
+        private Наклонение наклонение = Наклонение.НЕИЗВЕСТНО;
+        private Время время = Время.НЕИЗВЕСТНО;
+        private Род род = Род.НЕИЗВЕСТНО;
+        private Число число = Число.НЕИЗВЕСТНО;
+        private Лицо лицо = Лицо.НЕИЗВЕСТНО;
     }
 
     @Data
     public static class ImmutableAttributes {
-        private Вид вид;
-        private Возвратность возвратность;
-        private Переходность переходность;
-        private Спряжение спряжение;
+        private Вид вид = Вид.НЕИЗВЕСТНО;
+        private Возвратность возвратность = Возвратность.НЕИЗВЕСТНО;
+        private Переходность переходность = Переходность.НЕИЗВЕСТНО;
+        private Спряжение спряжение = Спряжение.НЕИЗВЕСТНО;
     }
 
     public Verb(String initialForm) {

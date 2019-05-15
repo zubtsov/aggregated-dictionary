@@ -13,18 +13,18 @@ public class Adjective extends MutablePartOfSpeech<Adjective.ImmutableAttributes
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes();
+        public static MutableAttributes initialFormAttributes = new MutableAttributes(Род.МУЖСКОЙ, Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
 
-        private Род род = Род.МУЖСКОЙ;
-        private Число число = Число.ЕДИНСТВЕННОЕ;
-        private Падеж падеж = Падеж.ИМЕНИТЕЛЬНЫЙ;
+        private Род род = Род.НЕИЗВЕСТНО;
+        private Число число = Число.НЕИЗВЕСТНО;
+        private Падеж падеж = Падеж.НЕИЗВЕСТНО;
     }
 
     @Data
     public static class ImmutableAttributes {
-        private РазрядПоЗначению разрядПоЗначению;
-        private Полнота полнота; //mutable?
-        private СтепеньСравнения степеньСравнения; //mutable?
+        private РазрядПоЗначению разрядПоЗначению = РазрядПоЗначению.НЕИЗВЕСТНО;
+        private Полнота полнота = Полнота.НЕИЗВЕСТНО; //mutable?
+        private СтепеньСравнения степеньСравнения = СтепеньСравнения.НЕИЗВЕСТНО; //mutable?
     }
 
     public Adjective(String initialForm) {
