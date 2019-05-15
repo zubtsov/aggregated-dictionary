@@ -9,20 +9,6 @@ import org.zubtsov.linguistics.dictionary.entities.utils.WordFormsMutableAttribu
 public class Adjective extends MutablePartOfSpeech<Adjective.ImmutableAttributes, Adjective.MutableAttributes> {
     public static final int MAXIMUM_NUMBER_OF_WORD_FORMS = Род.values().length * Число.values().length * Падеж.values().length;
 
-    public Adjective(String initialForm) {
-        this();
-        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(initialForm), MutableAttributes.initialFormAttributes);
-    }
-
-    public Adjective() {
-        this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
-    }
-
-    public Adjective(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping) {
-        this.wordImmutableAttributes = wordImmutableAttributes;
-        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
-    }
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -39,6 +25,20 @@ public class Adjective extends MutablePartOfSpeech<Adjective.ImmutableAttributes
         private РазрядПоЗначению разрядПоЗначению;
         private Полнота полнота; //mutable?
         private СтепеньСравнения степеньСравнения; //mutable?
+    }
+
+    public Adjective(String initialForm) {
+        this();
+        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(initialForm), MutableAttributes.initialFormAttributes);
+    }
+
+    public Adjective() {
+        this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
+    }
+
+    public Adjective(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping) {
+        this.wordImmutableAttributes = wordImmutableAttributes;
+        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
 
     @Override

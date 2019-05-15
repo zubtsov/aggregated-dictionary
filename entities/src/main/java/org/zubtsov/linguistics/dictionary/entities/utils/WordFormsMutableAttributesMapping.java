@@ -61,4 +61,20 @@ public class WordFormsMutableAttributesMapping<K, V> {
         }
         isMapsSynchronized = false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (Map.Entry<K, V> entry : wordFormsMutableAttributesMapping.entries()) {
+            sb.append("\"");
+            sb.append(entry.getKey());
+            sb.append("\"");
+            sb.append(": ");
+            sb.append(entry.getValue());
+            sb.append("; ");
+        }
+        sb.append("}");
+        return sb.toString();
+    }
 }

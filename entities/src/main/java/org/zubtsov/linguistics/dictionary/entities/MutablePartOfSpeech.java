@@ -2,6 +2,7 @@ package org.zubtsov.linguistics.dictionary.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.zubtsov.linguistics.dictionary.entities.utils.WordFormsMutableAttributesMapping;
 
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.Map;
 
 //todo: made generic & add methods, or add abstract class & add default implementation
+@ToString
 public abstract class MutablePartOfSpeech<I, M> {
 
     @Getter
@@ -63,20 +65,20 @@ public abstract class MutablePartOfSpeech<I, M> {
                 .isEquals();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Initial form: ");
-        sb.append(getInitialForm());
-        sb.append("\nImmutable attributes:\n");
-        sb.append(wordImmutableAttributes);
-        sb.append("\nWord forms:\n");
-        for (Map.Entry<Словоформа, M> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
-            sb.append(entry.getKey());
-            sb.append("[");
-            sb.append(entry.getValue());
-            sb.append("]\n");
-        }
-        return sb.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("Initial form: ");
+//        sb.append(getInitialForm());
+//        sb.append("\nImmutable attributes:\n");
+//        sb.append(wordImmutableAttributes);
+//        sb.append("\nWord forms:\n");
+//        for (Map.Entry<Словоформа, M> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
+//            sb.append(entry.getKey());
+//            sb.append("[");
+//            sb.append(entry.getValue());
+//            sb.append("]\n");
+//        }
+//        return sb.toString();
+//    }
 }

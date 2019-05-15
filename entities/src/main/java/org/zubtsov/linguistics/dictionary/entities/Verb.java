@@ -13,20 +13,6 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
             Число.values().length *
             Лицо.values().length;
 
-    public Verb(String initialForm) {
-        this();
-        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(initialForm), MutableAttributes.initialFormAttributes);
-    }
-
-    public Verb() {
-        this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
-    }
-
-    public Verb(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping) {
-        this.wordImmutableAttributes = wordImmutableAttributes;
-        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
-    }
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -46,6 +32,20 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
         private Возвратность возвратность;
         private Переходность переходность;
         private Спряжение спряжение;
+    }
+
+    public Verb(String initialForm) {
+        this();
+        wordFormsMutableAttributesMapping.setWordForm(new Словоформа(initialForm), MutableAttributes.initialFormAttributes);
+    }
+
+    public Verb() {
+        this(new ImmutableAttributes(), new WordFormsMutableAttributesMapping<>(MAXIMUM_NUMBER_OF_WORD_FORMS, MAXIMUM_NUMBER_OF_WORD_FORMS));
+    }
+
+    public Verb(ImmutableAttributes wordImmutableAttributes, WordFormsMutableAttributesMapping<Словоформа, MutableAttributes> wordFormsMutableAttributesMapping) {
+        this.wordImmutableAttributes = wordImmutableAttributes;
+        this.wordFormsMutableAttributesMapping = wordFormsMutableAttributesMapping;
     }
 
     @Override
