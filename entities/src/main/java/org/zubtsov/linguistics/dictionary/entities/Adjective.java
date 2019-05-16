@@ -13,7 +13,7 @@ public class Adjective extends MutablePartOfSpeech<Adjective.ImmutableAttributes
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes(Род.МУЖСКОЙ, Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
+        public static final MutableAttributes initialFormAttributes = new MutableAttributes(Род.МУЖСКОЙ, Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
 
         private Род род = Род.НЕИЗВЕСТНО;
         private Число число = Число.НЕИЗВЕСТНО;
@@ -42,9 +42,7 @@ public class Adjective extends MutablePartOfSpeech<Adjective.ImmutableAttributes
     }
 
     @Override
-    public Словоформа getInitialForm() {
-        return wordFormsMutableAttributesMapping
-                .getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes)
-                .iterator().next();
+    public MutableAttributes getInitialFormAttributes() {
+        return MutableAttributes.initialFormAttributes;
     }
 }

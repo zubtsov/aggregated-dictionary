@@ -44,7 +44,14 @@ public abstract class MutablePartOfSpeech<I, M> {
         wordFormsMutableAttributesMapping.setWordForms(wordForms, mutableAttributes);
     }
 
-    public abstract Словоформа getInitialForm();
+    public abstract M getInitialFormAttributes(); //todo: replace with protected field
+
+    public Словоформа getInitialForm() {
+        //todo: check iterator contains only one value
+        return wordFormsMutableAttributesMapping
+                .getWordFormByMutableAttributes(getInitialFormAttributes())
+                .iterator().next();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -65,20 +72,20 @@ public abstract class MutablePartOfSpeech<I, M> {
                 .isEquals();
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Initial form: ");
-//        sb.append(getInitialForm());
-//        sb.append("\nImmutable attributes:\n");
-//        sb.append(wordImmutableAttributes);
-//        sb.append("\nWord forms:\n");
-//        for (Map.Entry<Словоформа, M> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
-//            sb.append(entry.getKey());
-//            sb.append("[");
-//            sb.append(entry.getValue());
-//            sb.append("]\n");
-//        }
-//        return sb.toString();
-//    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Initial form: ");
+        sb.append(getInitialForm());
+        sb.append("\nImmutable attributes:\n");
+        sb.append(wordImmutableAttributes);
+        sb.append("\nWord forms:\n");
+        for (Map.Entry<Словоформа, M> entry : wordFormsMutableAttributesMapping.getWordFormToMutableAttributesMappingEntries()) {
+            sb.append(entry.getKey());
+            sb.append("[");
+            sb.append(entry.getValue());
+            sb.append("]\n");
+        }
+        return sb.toString();
+    }
 }

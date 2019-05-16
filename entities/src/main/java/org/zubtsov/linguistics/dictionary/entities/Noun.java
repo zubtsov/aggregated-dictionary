@@ -14,7 +14,7 @@ public class Noun extends MutablePartOfSpeech<Noun.ImmutableAttributes, Noun.Mut
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes(Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
+        public static final MutableAttributes initialFormAttributes = new MutableAttributes(Число.ЕДИНСТВЕННОЕ, Падеж.ИМЕНИТЕЛЬНЫЙ);
 
         private Число число = Число.НЕИЗВЕСТНО;
         private Падеж падеж = Падеж.НЕИЗВЕСТНО;
@@ -57,10 +57,7 @@ public class Noun extends MutablePartOfSpeech<Noun.ImmutableAttributes, Noun.Mut
     }
 
     @Override
-    public Словоформа getInitialForm() {
-        //todo: enforce presence of initial form by means of constructors?
-        return wordFormsMutableAttributesMapping
-                .getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes)
-                .iterator().next();
+    public MutableAttributes getInitialFormAttributes() {
+        return MutableAttributes.initialFormAttributes;
     }
 }

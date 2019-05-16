@@ -17,7 +17,7 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
     @NoArgsConstructor
     @AllArgsConstructor
     public static class MutableAttributes { //аналог "грамматического разряда" по А.А. Зализняку
-        public static MutableAttributes initialFormAttributes = new MutableAttributes(
+        public static final MutableAttributes initialFormAttributes = new MutableAttributes(
                 Наклонение.ОТСУТСТВУЕТ,
                 Время.ОТСУТСТВУЕТ,
                 Род.ОТСУТСТВУЕТ,
@@ -54,8 +54,7 @@ public class Verb extends MutablePartOfSpeech<Verb.ImmutableAttributes, Verb.Mut
     }
 
     @Override
-    public Словоформа getInitialForm() {
-        //todo: enforce presence of initial form by means of constructors?
-        return wordFormsMutableAttributesMapping.getWordFormByMutableAttributes(MutableAttributes.initialFormAttributes).iterator().next();
+    public MutableAttributes getInitialFormAttributes() {
+        return MutableAttributes.initialFormAttributes;
     }
 }
