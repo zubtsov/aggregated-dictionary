@@ -1,6 +1,8 @@
 package org.zubtsov.linguistics.dictionary;
 
 import lombok.extern.slf4j.Slf4j;
+import org.zubtsov.linguistics.dictionary.entities.characteristics.ЧастьРечи;
+import org.zubtsov.linguistics.dictionary.entities.Слово;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -24,7 +26,10 @@ public class ODictParser {
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                System.out.println(mapper.map(line));
+                Слово слово = mapper.map(line);
+                if (слово.частьРечи != ЧастьРечи.НЕИЗВЕСТНО) {
+                    System.out.println(слово);
+                }
             }
         } catch (IOException e) {
             log.error("Error occured while reading file" + dictionaryFilePath);
