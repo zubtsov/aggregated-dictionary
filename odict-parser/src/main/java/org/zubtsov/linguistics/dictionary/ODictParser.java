@@ -29,6 +29,7 @@ public class ODictParser {
                 Слово слово = mapper.map(line);
                 if (слово.частьРечи != ЧастьРечи.НЕИЗВЕСТНО) {
                     System.out.println(слово);
+                    System.out.println("Основа: " + FormsFactory.getОснова(слово));
                 }
             }
         } catch (IOException e) {

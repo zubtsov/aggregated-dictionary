@@ -25,7 +25,7 @@ public class ZaliznyakMapper {
                 case "жо":
                 case "со":
                 case "мо-жо":
-                    слово = mapLineToNoun(initialForm, modifier);
+                    слово = mapLineToNoun(initialForm, modifier); //субстантивное склонение
                     break;
                 case "св":
                 case "нсв":
@@ -33,7 +33,7 @@ public class ZaliznyakMapper {
                     слово = mapLineToVerb(initialForm, modifier);
                     break;
                 case "п":
-                    слово = mapLineToAdjective(initialForm, modifier);
+                    слово = mapLineToAdjective(initialForm, modifier); //адъективное склонение
                     break;
                 default:
                     break;
@@ -46,6 +46,7 @@ public class ZaliznyakMapper {
         Слово слово = new Слово();
         слово.setЧастьРечи(ЧастьРечи.ПРИЛАГАТЕЛЬНОЕ);
         Словоформа начальнаяФорма = new Словоформа(initialForm);
+        начальнаяФорма.начальнаяФорма = true;
         начальнаяФорма.setРод(Род.МУЖСКОЙ);
         начальнаяФорма.setЧисло(Число.ЕДИНСТВЕННОЕ);
         начальнаяФорма.setПадеж(Падеж.ИМЕНИТЕЛЬНЫЙ);
@@ -57,6 +58,7 @@ public class ZaliznyakMapper {
         Слово слово = new Слово();
         слово.setЧастьРечи(ЧастьРечи.ГЛАГОЛ);
         Словоформа начальнаяФорма = new Словоформа(initialForm);
+        начальнаяФорма.начальнаяФорма = true;
 
         switch (modifier) {
             case "св":
@@ -77,6 +79,7 @@ public class ZaliznyakMapper {
         Слово слово = new Слово();
         слово.setЧастьРечи(ЧастьРечи.СУЩЕСТВИТЕЛЬНОЕ);
         Словоформа начальнаяФорма = new Словоформа(initialForm);
+        начальнаяФорма.начальнаяФорма = true;
 
         switch (modifier) {
             case "м":

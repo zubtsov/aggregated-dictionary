@@ -16,6 +16,15 @@ public class Слово {
     @Setter
     public List<Словоформа> словоформы = new ArrayList<>(12);
 
+    public Словоформа getНачальнаяФорма() {
+        for (Словоформа ф : словоформы) {
+            if (ф.начальнаяФорма) {
+                return ф;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Часть речи: " + частьРечи + "; Словоформы: " + StringUtils.join(словоформы, ",");
